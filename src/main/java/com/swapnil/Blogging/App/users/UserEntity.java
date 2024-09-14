@@ -27,8 +27,12 @@ public class UserEntity {
     private String email;
 
 
+    @Column(nullable = false)
+    @NonNull
     private String bio;
 
 
+    @Column(nullable = false)
+    @NonNull
     private String image;
 }

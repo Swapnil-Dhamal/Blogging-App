@@ -5,4 +5,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ArticleRepo extends JpaRepository<ArticleEntity, Long> {
+    Iterable<ArticleEntity> getAllArticles();
+
+    Object getArticleBySlug(String slug);
 }

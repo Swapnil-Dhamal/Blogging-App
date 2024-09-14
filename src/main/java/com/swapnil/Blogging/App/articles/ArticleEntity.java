@@ -2,10 +2,7 @@ package com.swapnil.Blogging.App.articles;
 
 import com.swapnil.Blogging.App.users.UserEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
@@ -14,6 +11,8 @@ import java.util.Date;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ArticleEntity {
