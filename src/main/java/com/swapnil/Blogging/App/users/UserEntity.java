@@ -1,14 +1,14 @@
 package com.swapnil.Blogging.App.users;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class UserEntity {
@@ -26,11 +26,9 @@ public class UserEntity {
     @NonNull
     private String email;
 
-    @Column(nullable = false)
-    @NonNull
+
     private String bio;
 
-    @Column(nullable = false)
-    @NonNull
+
     private String image;
 }
