@@ -7,14 +7,10 @@ import org.springframework.lang.NonNull;
 
 @Data
 @Setter(AccessLevel.NONE)
-public class CreateUserRequest {
+public class LoginUserRequest {
 
     @NonNull
     private String username;
     @NonNull
     private String password;
-    @NonNull
-    private String email;
-
-
 }

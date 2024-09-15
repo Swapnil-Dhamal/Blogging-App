@@ -1,22 +1,31 @@
 package com.swapnil.Blogging.App.users;
 
+import com.swapnil.Blogging.App.users.dtos.CreateUserRequest;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
-    private UserRepo userRepo;
+    private final UserRepo userRepo;
+    private final ModelMapper modelMapper;
 
-    public UserService(UserRepo userRepo) {
+
+    @Autowired
+    public UserService(UserRepo userRepo, ModelMapper modelMapper) {
         this.userRepo = userRepo;
+        this.modelMapper = modelMapper;
     }
 
-    public UserEntity createUser(String username, String password, String email) {
-        var newUser = UserEntity.builder()
-                .username(username)
-//                .password(password)
-                .email(email)
-                .build();
+    public UserEntity createUser(CreateUserRequest req) {
+
+        UserEntity newUser=modelMapper.map(req, UserEntity.class);
+//        var newUser = UserEntity.builder()
+//                .username(req.getUsername())
+////                .password(password)
+//                .email(req.getEmail())
+//                .build();
 
         return userRepo.save(newUser);
 
@@ -26,7 +35,7 @@ public class UserService {
     }
 
     public UserEntity getUserByUserID(Long userId){
-        return userRepo.findByUserId(userId).orElseThrow(()->new UserNotFoundException(userId) );
+        return userRepo.findById(userId).orElseThrow(()->new UserNotFoundException(userId) );
     }
 
     public UserEntity loginUser(String username, String password){

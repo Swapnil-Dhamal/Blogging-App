@@ -3,9 +3,11 @@ package com.swapnil.Blogging.App.articles;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ArticleRepo extends JpaRepository<ArticleEntity, Long> {
-    Iterable<ArticleEntity> getAllArticles();
+    List<ArticleEntity> findAll();
 
-    Object getArticleBySlug(String slug);
+    Object findBySlug(String slug);
 }

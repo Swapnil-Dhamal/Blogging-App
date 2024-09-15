@@ -10,23 +10,27 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArticleService {
 
-    private final ArticleRepo articleRepo;
-    private final UserService userService;
-    private final UserRepo userRepo; // Add UserRepo
 
-    public ArticleService(ArticleRepo articleRepo, UserService userService, UserRepo userRepo) {
+    private final ArticleRepo articleRepo;
+    private final UserRepo userRepo;
+
+    @Autowired
+    public ArticleService(ArticleRepo articleRepo, UserRepo userRepo) {
         this.articleRepo = articleRepo;
-        this.userService = userService;
         this.userRepo = userRepo;
     }
 
 
+
+
+
+
     public Iterable<ArticleEntity> getAllArticles(){
-       return  articleRepo.getAllArticles();
+       return  articleRepo.findAll();
     }
 
     public ArticleEntity getArticleBySlug(String slug){
-        var article= articleRepo.getArticleBySlug(slug);
+        var article= articleRepo.findBySlug(slug);
 
         if(article==null){
             throw new ArticleNotFoundException(slug);
