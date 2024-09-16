@@ -7,7 +7,7 @@ import org.springframework.lang.Nullable;
 
 @Data
 @Entity
-
+@Builder
 @AllArgsConstructor
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

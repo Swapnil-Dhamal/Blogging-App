@@ -1,6 +1,7 @@
 package com.swapnil.Blogging.App.users;
 
 import com.swapnil.Blogging.App.common.dtos.ErrorResponse;
+import com.swapnil.Blogging.App.security.JWTService;
 import com.swapnil.Blogging.App.users.dtos.CreateUserRequest;
 import com.swapnil.Blogging.App.users.dtos.UserResponse;
 
@@ -20,24 +21,36 @@ public class UserController {
 
     private final UserService userService;
     private final ModelMapper modelMapper;
+    private final JWTService jwtService;
 
     @Autowired
-    public UserController(UserService userService, ModelMapper modelMapper) {
+    public UserController(UserService userService, ModelMapper modelMapper, JWTService jwtService) {
         this.userService = userService;
         this.modelMapper = modelMapper;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("")
     public ResponseEntity<UserResponse> signUpUser(@RequestBody CreateUserRequest createUserRequest){
         UserEntity savedUser=userService.createUser(createUserRequest);
         URI savedUri=URI.create("/users/"+ savedUser.getId());
-        return ResponseEntity.created(savedUri).body(modelMapper.map(savedUser, UserResponse.class));
+        var savedUserResponse=modelMapper.map(savedUser, UserResponse.class);
+        savedUserResponse.setToken(
+                jwtService.createJwt(savedUser.getId())
+        );
+
+        return ResponseEntity.created(savedUri).body(savedUserResponse);
+
     }
 
     @PostMapping("/login")
     public ResponseEntity<UserResponse> loginUser(@RequestBody LoginUserRequest loginUserRequest){
         UserEntity user=userService.loginUser(loginUserRequest.getUsername(), loginUserRequest.getPassword());
-        return ResponseEntity.ok(modelMapper.map(user, UserResponse.class));
+        var savedUserResponse=modelMapper.map(user, UserResponse.class);
+        savedUserResponse.setToken(
+                jwtService.createJwt(savedUserResponse.getId())
+        );
+        return ResponseEntity.ok(savedUserResponse);
     }
 
     @ExceptionHandler({UserService.UserNotFoundException.class})

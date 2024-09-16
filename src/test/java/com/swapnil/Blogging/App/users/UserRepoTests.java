@@ -2,6 +2,7 @@ package com.swapnil.Blogging.App.users;
 
 
 
+import lombok.Builder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
+
 @ActiveProfiles("test")
 public class UserRepoTests {
 
